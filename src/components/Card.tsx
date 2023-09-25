@@ -30,7 +30,7 @@ const cardVariants = {
 const StyledCard = styled(motion.img)<{ size?: 'small' | 'medium' | 'big' | 'huge'; hidden?: boolean; showCursor: boolean;}>`
   display: ${({ hidden }) => (hidden ? 'none' : 'block')};
   width: ${({ size }) => (size === 'small' ? '120px' : size === 'big' ? '160px' : size === 'huge'? '180px' : '140px')};
-  cursor: ${(props) => (props.showCursor ? 'pointer' : 'default')};
+  cursor: ${(props) => (props.showCursor ? 'grab' : 'default')};
 `;
 
 const backOfCardImageUrl = 'https://www.deckofcardsapi.com/static/img/back.png';

@@ -25,7 +25,7 @@ showCursor
       <BlankCard
       initial={{opacity: 0, scale: 0}}
       animate={{opacity: 1, scale: 1}}
-      whileHover={showCursor ? {scale: 1.05, cursor: 'pointer'} : {}}
+      whileHover={showCursor ? {scale: 1.05, cursor: 'grab'} : {}}
         onClick={() => onBlankCardClick()}
       />
   );

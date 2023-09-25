@@ -8,6 +8,7 @@ interface FlopProps {
   cards: CardType[];
   onFlopCardSelect?: (event: React.MouseEvent<HTMLImageElement>, card: CardType) => void;
   computerSelectedFlopCardCodes?: string[];
+  playerSelectedFlopCardCodes?: string[];
   playerSelectedCard?: CardType;
   playerTurn: boolean;
   onBlankCardClick: () => void;
@@ -17,6 +18,7 @@ const Flop: React.FC<FlopProps> = ({
   cards,
   onFlopCardSelect,
   computerSelectedFlopCardCodes,
+  playerSelectedFlopCardCodes,
   playerSelectedCard,
   playerTurn,
   onBlankCardClick
@@ -41,6 +43,7 @@ const Flop: React.FC<FlopProps> = ({
           type={computerSelectedFlopCardCodes?.includes(card.code) ? 'huge' : 'big'}
           onCardClick={onFlopCardSelect}
           showCursor={!!playerSelectedCard}
+          hidden={playerSelectedFlopCardCodes?.includes(card.code)}
         />
       ))}
     </HandContainer>

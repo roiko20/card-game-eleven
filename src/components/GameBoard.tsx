@@ -19,15 +19,12 @@ interface Move {
 }
 
 const GameBoardContainer = styled.div`
-  // display: flex;
-  // flex-direction: column;
-  // align-items: center;
+  padding: 16px;
   height: 100vh;
   background-color: green;
-  // justify-content: center;
   display: grid;
   grid-template-rows: repeat(3, 1fr); /* 3 columns */
-  grid-gap: 10px; /* Adjust the gap between items as needed */
+  box-sizing: border-box;
 `;
 
 const HandContainer = styled.div`
@@ -292,9 +289,8 @@ const GameBoard: React.FC = () => {
     const sumOfCurrentSelectedPlayerCards = playerSelectedFlopCards.reduce((accumulator, pickedCard) => accumulator + getCardValueByCode(pickedCard.code), 0);
     if (getCardValueByCode(playerSelectedCard.code) + sumOfCurrentSelectedPlayerCards + getCardValueByCode(card.code) < 11) {
       setPlayerSelectedFlopCards([...playerSelectedFlopCards, card]);
-      const newFlop = flopCards.filter((flopCard) => flopCard.code !== card.code);
-      setFlopCards(newFlop);
-      setPlayerTurn(false);
+      //const newFlop = flopCards.filter((flopCard) => flopCard.code !== card.code);
+      //setFlopCards(newFlop);
     }
     if (getCardValueByCode(playerSelectedCard.code) + sumOfCurrentSelectedPlayerCards + getCardValueByCode(card.code) === 11) {
       const newFlop = flopCards.filter((flopCard) => flopCard.code !== card.code);
@@ -316,6 +312,7 @@ const GameBoard: React.FC = () => {
 
   const handlePlayerCancelSelection = () => {
     setPlayerSelectedCard(undefined);
+    setPlayerSelectedFlopCards([]);
   }
   
   return (
@@ -340,6 +337,7 @@ const GameBoard: React.FC = () => {
             cards={flopCards}
             onFlopCardSelect={handlePlayerFlopClick}
             computerSelectedFlopCardCodes={computerSelectedFlopCardCodes}
+            playerSelectedFlopCardCodes={playerSelectedFlopCards.map(card => card.code)}
             playerSelectedCard={playerSelectedCard}
             playerTurn={playerTurn}
             onBlankCardClick={dropPlayerselectedCard}
@@ -361,7 +359,7 @@ const GameBoard: React.FC = () => {
         }
       </HandContainer>
       {playerSelectedCard &&
-        <PlayerSelection cards={[playerSelectedCard]} initialPosition={cursorPosition} />
+        <PlayerSelection cards={[playerSelectedCard, ...playerSelectedFlopCards]} initialPosition={cursorPosition} />
       }
     </GameBoardContainer>
   );

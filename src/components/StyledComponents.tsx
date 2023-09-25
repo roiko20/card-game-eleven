@@ -13,3 +13,16 @@ justify-content: center; /* Center the content inside the center container horiz
 //align-items: center; /* Center the content inside the center container vertically */
 height: 120px;
 `;
+
+export const deckVariants = {
+  hidden: {scale: 0.5, opacity: 0.3, y:100},
+  visible: {
+    scale: 1,
+    opacity: 1,
+    y: 0,
+    transition: {
+      staggerChildren: 0.07,
+      delayChildren: 0.2
+    }
+  }
+}

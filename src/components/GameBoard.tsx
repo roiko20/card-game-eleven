@@ -315,7 +315,6 @@ const GameBoard: React.FC = () => {
   }
 
   const handlePlayerCancelSelection = () => {
-    console.log('clickedddd');
     setPlayerSelectedCard(undefined);
   }
   
@@ -329,14 +328,14 @@ const GameBoard: React.FC = () => {
           isPlayerSidePile={false}
         />
       }
-      {computerCards &&
+      {computerCards.length &&
         <ComputerHand
           cards={computerCards}
           computerSelectedCard={computerSelectedCard}
         />
       }
       </HandContainer>
-      {flopCards &&
+      {flopCards.length &&
           <Flop
             cards={flopCards}
             onFlopCardSelect={handlePlayerFlopClick}
@@ -347,7 +346,7 @@ const GameBoard: React.FC = () => {
           />
       }
       <HandContainer>
-        {playerCards &&
+        {playerCards.length &&
           <PlayerHand
             cards={playerCards}
             playerSelectedCard={playerSelectedCard}

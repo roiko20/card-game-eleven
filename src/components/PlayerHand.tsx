@@ -2,6 +2,7 @@ import React from 'react';
 import Card, {CardType} from './Card';
 import { motion } from 'framer-motion';
 import { HandContainer } from './StyledComponents';
+import {deckVariants} from './StyledComponents';
 
 interface PlayerHandProps {
   cards: CardType[];
@@ -12,14 +13,11 @@ interface PlayerHandProps {
 const PlayerHand: React.FC<PlayerHandProps> = ({ cards, playerSelectedCard, onPlayerCardSelect }) => {
   return (
     <HandContainer
-      initial={{scale: 0.5, opacity: 0.3}}
-      animate={{scale: 1, opacity: 1, transition: { duration: 0.5 }}}
+      variants={deckVariants}
+      initial="hidden"
+      animate="visible"
     >
     {cards.map((card, index) => (
-        <motion.div
-        key={index}
-        whileHover={{ y: -10 }}
-      >
         <Card
           key={card.code}
           card={card}
@@ -28,7 +26,6 @@ const PlayerHand: React.FC<PlayerHandProps> = ({ cards, playerSelectedCard, onPl
           type={'medium'}
           showCursor={true}
         />
-      </motion.div>
     ))}
   </HandContainer>
   );

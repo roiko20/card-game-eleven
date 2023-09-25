@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Card, { CardType } from './Card';
 import { HandContainer } from './StyledComponents';
 import BlankCard from './BlankCard';
+import {deckVariants} from './StyledComponents';
 
 interface FlopProps {
   cards: CardType[];
@@ -22,12 +23,14 @@ const Flop: React.FC<FlopProps> = ({
 }) => {
   return (
     <HandContainer
-      initial={{ scale: 0.5, opacity: 0.3 }}
-      animate={{ scale: 1, opacity: 1, transition: { duration: 0.5 } }}
+      variants={deckVariants}
+      initial="hidden"
+      animate="visible"
     >
       {!!playerTurn &&
         <BlankCard
           onBlankCardClick={onBlankCardClick}
+          showCursor={!!playerSelectedCard}
         />
       }
       {/* Render the flop's cards */}

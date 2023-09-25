@@ -36,7 +36,7 @@ const Flop: React.FC<FlopProps> = ({
         />
       }
       {/* Render the flop's cards */}
-      {cards.map((card: CardType) => (
+      {cards.length > 0 && cards.map((card: CardType) => (
         <Card
           key={card.code}
           card={card}

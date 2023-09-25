@@ -27,10 +27,9 @@ const cardVariants = {
   visible: { opacity: 1, x: 0, transition: { duration: 0.5 } },
 };
 
-const StyledCard = styled(motion.img)<{ size?: 'small' | 'medium' | 'big' | 'huge'; hidden?: boolean; showCursor: boolean;}>`
+const StyledCard = styled(motion.img)<{ size?: 'small' | 'medium' | 'big' | 'huge'; hidden?: boolean;}>`
   display: ${({ hidden }) => (hidden ? 'none' : 'block')};
   width: ${({ size }) => (size === 'small' ? '120px' : size === 'big' ? '160px' : size === 'huge'? '180px' : '140px')};
-  cursor: ${(props) => (props.showCursor ? 'grab' : 'default')};
 `;
 
 const backOfCardImageUrl = 'https://www.deckofcardsapi.com/static/img/back.png';
@@ -50,9 +49,8 @@ const Card: React.FC<CardProps> = ({
         size={type}
         hidden={hidden}
         onClick={(event) => onCardClick && onCardClick(event, card)}
-        showCursor={showCursor}
         variants={cardVariants}
-        whileHover={showCursor ? {y: -10} : {}}
+        whileHover={showCursor ? {y: -10, cursor: 'grab'} : {}}
       />
   );
 };

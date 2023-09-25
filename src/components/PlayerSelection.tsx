@@ -29,7 +29,7 @@ const CursorFollower: React.FC<CursorFollowerProps> = ({ cards, initialPosition 
       }}
     >
       {cards.map((card: CardType, index: number) => (
-        <StackedCard index={index}>
+        <StackedCard key={card.code} index={index}>
           <Card key={card.code} card={card} />
         </StackedCard>
       ))}

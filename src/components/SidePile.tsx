@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 
 const StackedCard = styled(motion.div)<{ index: number, isPlayerSidePile: boolean }>`
   margin-left: ${({ index, isPlayerSidePile }) => (index === 0 ? '0'
-                                : isPlayerSidePile ? '-117px' : '-127px')}; /* Adjust the value as needed for overlapping */
+                                : isPlayerSidePile ? '-121.25px' : '-118.75px')}; /* Adjust the value as needed for overlapping */
 `;
 
 interface SidePileProps {
@@ -28,7 +28,7 @@ const SidePile: React.FC<SidePileProps> = ({ cards, isPlayerSidePile }) => {
           <StackedCard
             key={index}
             index={index}
-            initial={{ x: isPlayerSidePile ? -200 : 200, y: isPlayerSidePile ? -200 : 200 }}
+            initial={{ x: isPlayerSidePile ? -300 : 300, y: isPlayerSidePile ? -300 : 300 }}
             isPlayerSidePile={isPlayerSidePile}
             animate={{ scale: 1, x: 0, y: 0, transition: { duration: 0.5 }}}
           >

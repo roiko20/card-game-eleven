@@ -241,6 +241,7 @@ const GameBoard: React.FC = () => {
     setPlayerSidePile([...playerSidePile, ...cardsToPickUp, card]);
     setFlopCards(newFlop);
     setPlayerSelectedCard(undefined);
+    setPlayerSelectedFlopCards([]);
     setPlayerCards(newPlayerHand);
     setPlayerTurn(playerTurn => !playerTurn);
   }
@@ -261,8 +262,10 @@ const GameBoard: React.FC = () => {
 
     // remove used card from player hand
     const newPlayerHand = playerCards.filter((card) => card.code !== jackCard.code);
-
-    pickupPlayerCardsToSidePile(cardsToPickUp, jackCard, newFlop, newPlayerHand);
+    setPlayerSelectedFlopCards(cardsToPickUp);
+    setTimeout(() => {
+      pickupPlayerCardsToSidePile(cardsToPickUp, jackCard, newFlop, newPlayerHand);
+    }, 1000);
   }
 
   const handlePlayerFlopClick = (event: React.MouseEvent<HTMLImageElement>, card: CardType) => {
@@ -319,21 +322,21 @@ const GameBoard: React.FC = () => {
     <GameBoardContainer onClick={() => handlePlayerCancelSelection()}>
       {/* <h2>Score: {score}</h2> */}
       <HandContainer>
-      {computerSidePile && 
+      {computerSidePile.length > 0 && 
         <SidePile
           cards={computerSidePile}
           isPlayerSidePile={false}
         />
       }
-      {computerCards.length &&
+      {computerCards.length > 0 &&
         <ComputerHand
           cards={computerCards}
           computerSelectedCard={computerSelectedCard}
         />
       }
       </HandContainer>
-      {flopCards.length &&
-          <Flop
+      {(flopCards.length > 0 || (!!playerTurn && playerCards.length > 0)) &&
+        <Flop
             cards={flopCards}
             onFlopCardSelect={handlePlayerFlopClick}
             computerSelectedFlopCardCodes={computerSelectedFlopCardCodes}
@@ -341,17 +344,17 @@ const GameBoard: React.FC = () => {
             playerSelectedCard={playerSelectedCard}
             playerTurn={playerTurn}
             onBlankCardClick={dropPlayerselectedCard}
-          />
+        />
       }
       <HandContainer>
-        {playerCards.length &&
+        {playerCards.length > 0 &&
           <PlayerHand
             cards={playerCards}
             playerSelectedCard={playerSelectedCard}
             onPlayerCardSelect={handlePlayerCardSelect}
           />
         }
-        {playerSidePile && 
+        {playerSidePile.length > 0 && 
           <SidePile
             cards={playerSidePile}
             isPlayerSidePile={true}

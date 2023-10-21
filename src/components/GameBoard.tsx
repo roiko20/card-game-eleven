@@ -8,10 +8,10 @@ import cardsData from './CardsData';
 import PlayerSelection from './PlayerSelection';
 import SidePile from './SidePile';
 import styled from 'styled-components';
-import BlankCard from './BlankCard';
 import { getCardValueByCode, getCardRank } from '../utils/CardUtils';
 import { drawCardsFromDeck, replaceJacks } from '../utils/DeckUtils';
 import { getMoveScore } from '../utils/MoveUtils';
+import Score from './Score';
 
 interface Move {
   cardCodes: string[];
@@ -19,35 +19,41 @@ interface Move {
 }
 
 const GameBoardContainer = styled.div`
-  padding: 16px;
-  height: 100vh;
-  background-color: green;
+  padding-top: 32px;
   display: grid;
-  grid-template-rows: repeat(3, 1fr); /* 3 columns */
+  grid-template-rows: 20% 40% 30%;
+  grid-template-columns: 25% auto 25%;
   box-sizing: border-box;
+  height: 100vh;
+  width: 100vw;
+  gap: 32px;
 `;
-
-const HandContainer = styled.div`
-  display: grid;
-  padding: 16px;
-`;
-
 
 const GameBoard: React.FC = () => {
-  const [score, setScore] = useState<number>(0);
-  const [playerTurn, setPlayerTurn] = useState<boolean>(true);
+  // deck
+  const [cardsDeck, setCardsDeck] = useState<CardType[]>([]);
   // shouldn't need it
   const [deckId, setDeckId] = useState<string>('');
-  const [cardsDeck, setCardsDeck] = useState<CardType[]>([]);
+  // computer
   const [computerCards, setComputerCards] = useState<CardType[]>([]);
-  const [playerCards, setPlayerCards] = useState<CardType[]>([]);
-  const [flopCards, setFlopCards] = useState<CardType[]>([]);
   const [computerSelectedCard, setComputerSelectedCard] = useState<CardType| undefined>();
-  const [playerSelectedCard, setPlayerSelectedCard] = useState<CardType | undefined>();
-  const [playerSelectedFlopCards, setPlayerSelectedFlopCards] = useState<CardType[]>([]);
   const [computerSelectedFlopCardCodes, setComputerSelectedFlopCardCodes] = useState<string[]>([]);
   const [computerSidePile, setComputerSidePile] = useState<CardType[]>([]);
+  const [computerScore, setComputerScore] = useState<number>(0);
+  const [computerClubs, setComputerClubs] = useState<number>(0);
+  const [computerBonus, setComputerBonus] = useState<number>(0);
+  // flop
+  const [flopCards, setFlopCards] = useState<CardType[]>([]);
+  // player
+  const [playerCards, setPlayerCards] = useState<CardType[]>([]);
+  const [playerSelectedCard, setPlayerSelectedCard] = useState<CardType | undefined>();
+  const [playerSelectedFlopCards, setPlayerSelectedFlopCards] = useState<CardType[]>([]);
   const [playerSidePile, setPlayerSidePile] = useState<CardType[]>([]);
+  const [playerScore, setPlayerScore] = useState<number>(0);
+  const [playerClubs, setPlayerClubs] = useState<number>(0);
+  const [playerBonus, setPlayerBonus] = useState<number>(0);
+  // game
+  const [playerTurn, setPlayerTurn] = useState<boolean>(true);
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
 
   // Fetch the deck of cards from the API and deal a round
@@ -320,21 +326,24 @@ const GameBoard: React.FC = () => {
   
   return (
     <GameBoardContainer onClick={() => handlePlayerCancelSelection()}>
-      {/* <h2>Score: {score}</h2> */}
-      <HandContainer>
+        <Score
+          title={"Computer"}
+          score={computerScore}
+          clubs={computerClubs}
+          bonus={computerBonus}
+        />
+      {computerCards.length > 0 && 
+      <ComputerHand
+          cards={computerCards}
+          computerSelectedCard={computerSelectedCard}
+      />
+      }
       {computerSidePile.length > 0 && 
         <SidePile
           cards={computerSidePile}
           isPlayerSidePile={false}
         />
       }
-      {computerCards.length > 0 &&
-        <ComputerHand
-          cards={computerCards}
-          computerSelectedCard={computerSelectedCard}
-        />
-      }
-      </HandContainer>
       {(flopCards.length > 0 || (!!playerTurn && playerCards.length > 0)) &&
         <Flop
             cards={flopCards}
@@ -346,24 +355,40 @@ const GameBoard: React.FC = () => {
             onBlankCardClick={dropPlayerselectedCard}
         />
       }
-      <HandContainer>
-        {playerCards.length > 0 &&
+      <Score
+        title={"You"}
+        score={playerScore}
+        clubs={playerClubs}
+        bonus={playerBonus}
+        isPlayerScore={true}
+      />
+      {playerCards.length > 0 &&
           <PlayerHand
             cards={playerCards}
             playerSelectedCard={playerSelectedCard}
             onPlayerCardSelect={handlePlayerCardSelect}
           />
+      }
+      {playerSidePile.length > 0 && 
+          <SidePile
+            cards={playerSidePile}
+            isPlayerSidePile={true}
+          />
         }
+      {playerSelectedCard &&
+        <PlayerSelection cards={[playerSelectedCard, ...playerSelectedFlopCards]} initialPosition={cursorPosition} />
+      }
+      {/* <PlayerHandContainer>
         {playerSidePile.length > 0 && 
           <SidePile
             cards={playerSidePile}
             isPlayerSidePile={true}
           />
         }
-      </HandContainer>
+      </PlayerHandContainer>
       {playerSelectedCard &&
         <PlayerSelection cards={[playerSelectedCard, ...playerSelectedFlopCards]} initialPosition={cursorPosition} />
-      }
+      } */}
     </GameBoardContainer>
   );
 };

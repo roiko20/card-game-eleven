@@ -1,13 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import Card, {CardType} from './Card';
-import { HandContainer } from './StyledComponents';
-import {deckVariants} from './StyledComponents';
+import Card, { CardType } from './Card';
+import { deckVariants } from './StyledComponents';
+import { motion } from 'framer-motion';
 
 interface ComputerHandProps {
     cards: CardType[];
     computerSelectedCard? : CardType;
 }
+
+const HandContainer = styled(motion.div)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+`;
 
 const ComputerHand: React.FC<ComputerHandProps> = ({ cards, computerSelectedCard }) => {
   

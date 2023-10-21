@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Card, { CardType } from './Card';
-import { HandContainer } from './StyledComponents';
 import BlankCard from './BlankCard';
-import {deckVariants} from './StyledComponents';
+import { deckVariants } from './StyledComponents';
+import styled from 'styled-components';
+import { motion } from 'framer-motion';
 
 interface FlopProps {
   cards: CardType[];
@@ -13,6 +14,15 @@ interface FlopProps {
   playerTurn: boolean;
   onBlankCardClick: () => void;
 }
+
+const HandContainer = styled(motion.div)`
+  grid-row-start: 2;
+  grid-column-start: span 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+`;
 
 const Flop: React.FC<FlopProps> = ({
   cards,

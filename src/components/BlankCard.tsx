@@ -8,13 +8,13 @@ interface BlankCardProps {
 }
 
 const BlankCard = styled(motion.div)`
-width: 160px;
-height: 220px;
-margin: 16px;
-border-radius: 8px;
-border: 3px dashed lightgreen;
-background-color: MediumSeaGreen;
-box-sizing: border-box;
+  height: 100%;
+  width: 13rem;
+  margin: 16px;
+  border-radius: 8px;
+  border: 3px dashed lightgreen;
+  background-color: MediumSeaGreen;
+  box-sizing: border-box;
 `;
 
 const Card: React.FC<BlankCardProps> = ({ 

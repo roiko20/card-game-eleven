@@ -8,10 +8,10 @@ export const CardsContainer = styled(motion.div)`
 `;
 
 export const HandContainer = styled(CardsContainer)`
-flex: 1; /* This will make the center container take up remaining space */
+display: flex;
+align-items: center;
 justify-content: center; /* Center the content inside the center container horizontally */
 //align-items: center; /* Center the content inside the center container vertically */
-height: 120px;
 `;
 
 export const deckVariants = {
